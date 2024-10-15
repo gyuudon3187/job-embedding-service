@@ -45,3 +45,9 @@ def search_qdrant(embedding):
         with_payload=True,
         with_vectors=True
     )
+
+def delete_embedding(id):
+    return client.delete(
+        collection_name=collection_name,
+        points_selector=[id]
+    )

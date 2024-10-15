@@ -1,6 +1,6 @@
 import numpy as np
 from flask import Blueprint, request, jsonify
-from services.qdrant_service import embed_description, get_upsert_and_return_response_func, search_qdrant, get_upsert_and_return_response_func
+from services.qdrant_service import delete_embedding, embed_description, get_upsert_and_return_response_func, search_qdrant, get_upsert_and_return_response_func
 from services.db_service import get_job_details
 from utils.helpers import satisfies_cos_sim_threshold, field_is_substring_of_fields
 
@@ -55,3 +55,13 @@ def embed_into_qdrant():
         return jsonify({'id': close_id, 'description': close_description}), 200
     else:
         return upsert_and_return_response()
+
+@embed_blueprint.route('/delete_embedding', methods=['POST'])
+def delete_from_qdrant():
+    data = request.get_json()
+
+    id = data.get('id')
+    if not id:
+        return jsonify({'error': 'No id provided'})
+
+    return delete_embedding(id).model_dump_json(), 200
