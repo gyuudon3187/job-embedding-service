@@ -19,7 +19,7 @@ def embed_description(description):
 
 def get_upsert_and_return_response_func(job_id, embedding, description):
     def upsert_and_return_response():
-        return client.upsert(
+        response = client.upsert(
             collection_name="descriptions",
             points=[
                 PointStruct(
@@ -28,7 +28,12 @@ def get_upsert_and_return_response_func(job_id, embedding, description):
                     payload={'description': description}
                 )
             ]
-        ).model_dump_json(), 201
+        )
+
+        if response.model_dump().get('status') == "completed":
+            return response.model_dump_json(), 201
+        else:
+            return response.model_dump_json(), 400
 
     return upsert_and_return_response
 
