@@ -34,7 +34,7 @@ def embed_into_qdrant():
     close_id = sought_datapoint.id
     close_description = sought_datapoint.payload.get('description')
     if np.array_equal(close_vector, embedding):
-        return jsonify({'id': close_id, 'description': close_description}), 201
+        return jsonify({'id': close_id, 'description': close_description}), 200
 
     companies, titles, urls = get_job_details(str(sought_datapoint.id))
 
@@ -52,6 +52,6 @@ def embed_into_qdrant():
         identity_threshold -= 0.15
 
     if satisfies_cos_sim_threshold(close_vector, embedding, identity_threshold):
-        return jsonify({'id': close_id, 'description': close_description}), 201
+        return jsonify({'id': close_id, 'description': close_description}), 200
     else:
         return upsert_and_return_response()
