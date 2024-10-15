@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask specific
+instance/
+.env
+
+# Environment variables
+.env.local
+.env.*.local
+.envrc
+*.env
+
+# SQL database files
+*.sqlite3
+
+# Docker specific
+*.log
+docker-compose.override.yml
+.dockerignore
+
+# Qdrant related
+qdrant_data/
+qdrant_logs/
+
+# MacOS specific
+.DS_Store
+
+# Cache files
+*.cache
+
+# Virtual environment
+venv/
